@@ -41,9 +41,18 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Unit>> Update(Guid id, Edit.Command command)
+        public async Task<ActionResult<Unit>> Update(Guid id, Delete.Command command)
         {
             command.Id = id;
+            return await _mediator.Send(command);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> Delete(Guid id)
+        {
+            var command = new Delete.Command() { Id = id };
+
             return await _mediator.Send(command);
         }
     }
