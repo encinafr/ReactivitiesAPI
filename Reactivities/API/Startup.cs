@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Pesistence;
 using MediatR;
 using Application.Activities;
+using FluentValidation.AspNetCore;
 
 namespace API
 {
@@ -42,6 +43,8 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddMvc().AddFluentValidation(cfg =>
+            cfg.RegisterValidatorsFromAssemblyContaining<Create>());
 
             services.Configure<IISServerOptions>(options =>
             {
