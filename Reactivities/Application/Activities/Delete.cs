@@ -1,4 +1,5 @@
-﻿using Domain;
+﻿using Application.Errors;
+using Domain;
 using MediatR;
 using Pesistence;
 using System;
@@ -30,7 +31,7 @@ namespace Application.Activities
                 var activity = await _context.Activities.FindAsync(request.Id);
 
                 if (activity == null)
-                    throw new Exception("Could not find activity");
+                    throw new RestException(System.Net.HttpStatusCode.NotFound, new { activity = "Not found" });
 
                 _context.Remove(activity);
                 
