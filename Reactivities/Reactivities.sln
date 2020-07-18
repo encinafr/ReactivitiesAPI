@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{C792FAD2-699B-4CB4-8CDD-6ED993772BD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pesistence", "Pesistence\Pesistence.csproj", "{BADA9D6B-ACF4-47C7-BFFF-FDD466A72242}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pesistence", "Pesistence\Pesistence.csproj", "{BADA9D6B-ACF4-47C7-BFFF-FDD466A72242}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
