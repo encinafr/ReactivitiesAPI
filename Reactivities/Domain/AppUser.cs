@@ -7,6 +7,6 @@ namespace Domain
 {
     public class AppUser : IdentityUser
     {
-        public int DisplayName { get; set; }
+        public string DisplayName { get; set; }
     }
 }

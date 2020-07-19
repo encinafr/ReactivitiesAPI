@@ -9,8 +9,8 @@ using Pesistence;
 namespace Pesistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20200718223425_AddedIdentity")]
-    partial class AddedIdentity
+    [Migration("20200719003519_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,8 +59,8 @@ namespace Pesistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("DisplayName")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .HasColumnType("TEXT")

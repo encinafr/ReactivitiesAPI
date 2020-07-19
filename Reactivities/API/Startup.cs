@@ -17,6 +17,9 @@ using MediatR;
 using Application.Activities;
 using FluentValidation.AspNetCore;
 using API.Middleware;
+using Domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace API
 {
@@ -51,6 +54,10 @@ namespace API
             {
                 options.AutomaticAuthentication = false;
             });
+
+            services.AddIdentityCore<AppUser>()
+                 .AddEntityFrameworkStores<DataContext>();
+            services.TryAddScoped<SignInManager<AppUser>>();
 
         }
 
