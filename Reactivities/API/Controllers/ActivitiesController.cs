@@ -11,40 +11,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ActivitiesController : ControllerBase
+    public class ActivitiesController : BaseController
     {
-        private readonly IMediator _mediator;
-
-        public ActivitiesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<Activity>>> List(CancellationToken cancelletionToken)
         {
-            return await _mediator.Send(new List.Query(), cancelletionToken);
+            return await Mediator.Send(new List.Query(), cancelletionToken);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Activity>> Details(Guid id)
         {
-            return await _mediator.Send(new Detail.Query { Id = id });
+            return await Mediator.Send(new Detail.Query { Id = id });
         } 
 
         [HttpPost]
         public async Task<ActionResult<Unit>> Create(Create.Command command)
         {
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Unit>> Update(Guid id, Edit.Command command)
         {
             command.Id = id;
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
 
 
@@ -53,7 +45,7 @@ namespace API.Controllers
         {
             var command = new Delete.Command() { Id = id };
 
-            return await _mediator.Send(command);
+            return await Mediator.Send(command);
         }
     }
 }

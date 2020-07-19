@@ -56,7 +56,7 @@ namespace API
             });
 
             services.AddIdentityCore<AppUser>()
-                 .AddEntityFrameworkStores<DataContext>();
+                    .AddEntityFrameworkStores<DataContext>();
             services.TryAddScoped<SignInManager<AppUser>>();
 
         }
