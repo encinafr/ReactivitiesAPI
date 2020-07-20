@@ -37,6 +37,7 @@ namespace API
         {
             services.AddControllers();
             services.AddPersistence(Configuration);
+            services.AddJwtGenerator();
 
             services.AddCors(opt =>
             {

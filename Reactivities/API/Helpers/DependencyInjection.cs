@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Application.Interfaces;
+using Infrastructure.Security;
 
 namespace Pesistence
 {
@@ -16,6 +18,12 @@ namespace Pesistence
                 opt.UseSqlite(configuration.GetConnectionString("DefaultConnection"));
             });
 
+            return services;
+        }
+
+        public static IServiceCollection AddJwtGenerator(this IServiceCollection services)
+        {
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
             return services;
         }
     }
