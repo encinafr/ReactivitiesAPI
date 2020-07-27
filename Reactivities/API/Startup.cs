@@ -20,6 +20,11 @@ using API.Middleware;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -38,6 +43,7 @@ namespace API
             services.AddControllers();
             services.AddPersistence(Configuration);
             services.AddJwtGenerator();
+            services.AddUserAccesor();
 
             services.AddCors(opt =>
             {
@@ -48,8 +54,12 @@ namespace API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddMvc().AddFluentValidation(cfg =>
-            cfg.RegisterValidatorsFromAssemblyContaining<Create>());
+            services.AddMvc(opt =>
+            {
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                opt.Filters.Add(new AuthorizeFilter(policy));
+
+            }).AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Create>());
 
             services.Configure<IISServerOptions>(options =>
             {
@@ -59,6 +69,21 @@ namespace API
             services.AddIdentityCore<AppUser>()
                     .AddEntityFrameworkStores<DataContext>();
             services.TryAddScoped<SignInManager<AppUser>>();
+            //Firma
+            //Configurar secrect key
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("super secret key"));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
+            {
+                //Valido la firma
+                //ValidateAudience es para validar de donde vienen lasurls
+                opt.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = key,
+                    ValidateAudience = false,
+                    ValidateIssuer = false
+                };
+            });
 
         }
 
@@ -79,7 +104,7 @@ namespace API
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {

@@ -26,5 +26,11 @@ namespace Pesistence
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             return services;
         }
+
+        public static IServiceCollection AddUserAccesor(this IServiceCollection services)
+        {
+            services.AddScoped<IUserAccesor, UserAccesor>();
+            return services;
+        }
     }
 }
